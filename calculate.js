@@ -26,13 +26,17 @@ var center = map.getCenter();
 google.maps.event.trigger(map, "resize");
 map.setCenter(center);
          document.getElementById('distance').innerHTML = 
-           "UberX cost: $" + Math.round( (3+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.30)) *100 ) /100;
+           "UberX cost: RM" + Math.round( (7+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.30)) *100 ) /100;
+         document.getElementById('distance11').innerHTML = 
+           "UberLUX cost: RM" + Math.round( (10+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.42)) *100 ) /100;
+         document.getElementById('distance12').innerHTML = 
+           "UberBlack cost: RM" + Math.round( (7.5+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.38)) *100 ) /100;
          document.getElementById('distance2').innerHTML = 
-           "MyTeksi cost: $" + Math.round( (3.5+(response.routes[0].legs[0].distance.value*0.000621371*1.90)+(response.routes[0].legs[0].duration.value/60*.40)) *100 ) /100;
+           "MyTeksi cost: RM" + Math.round( (7.5+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.42)) *100 ) /100;
          document.getElementById('distance3').innerHTML = 
-           "EasyTaxi cost: $" + Math.round( (3.5+(response.routes[0].legs[0].distance.value*0.000621371*2.75)+(response.routes[0].legs[0].duration.value/60*.55)) *100 ) /100;
+           "EasyTeksi cost: RM" + Math.round( (7.5+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.44)) *100 ) /100;
          document.getElementById('duration').innerHTML = 
-            "Time: " + Math.round( (response.routes[0].legs[0].duration.value/60) *100 ) / 100 + " minutes";
+            "Time to location: " + Math.round( (response.routes[0].legs[0].duration.value/60) *100 ) / 100 + " minutes";
          directionsDisplay.setDirections(response);
       }
    });

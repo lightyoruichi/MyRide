@@ -18,7 +18,7 @@
 
 <div id="body">
 <div id="top">
-  <div id="top"><p id="toploc">Current Location: Kuala Lumpur City Centre, Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia</p></div><div id="spin" style="display:none;"></div><p id="header">MyRide</p>
+  <div id="top"><p id="toploc">Current Location: Kuala Lumpur, Malaysia</p></div><div id="spin" style="display:none;"></div><p id="header">MyRide</p>
   <input type="button" class="Button" id="getLocation" onclick="getLocation()" value="find me"/>
   <form action="index.php" method="post" id="Address">
     <p>start address: 
@@ -37,22 +37,27 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-$apicars='https://api.uber.com/v1/estimates/time?server_token=HVv64WNdUrkhdnd4MZUghrZ8NXrhXphleQzTx8Uc&start_longitude=101.71&start_latitude=3.1545487999999997';
-$carsJ = file_get_contents($apicars);
+$estimate_time='https://api.uber.com/v1/estimates/time?server_token=HVv64WNdUrkhdnd4MZUghrZ8NXrhXphleQzTx8Uc&start_longitude=101.71&start_latitude=3.1545487999999997';
+$product='https://api.uber.com/v1/products?server_token=HVv64WNdUrkhdnd4MZUghrZ8NXrhXphleQzTx8Uc&longitude=101.71&latitude=3.1545487999999997';
+$estimate_price='https://api.uber.com/v1/estimates/price?server_token=HVv64WNdUrkhdnd4MZUghrZ8NXrhXphleQzTx8Uc&start_longitude=101.71&start_latitude=3.1545487999999997&end_longitude=101.6764&end_latitude=3.1166';
+$carsJ = file_get_contents($estimate_time);
 $assoc = true;
 $carsJx = json_decode($carsJ, $assoc);
 
+$carsJ = file_get_contents($product);
+$assoc = true;
+$carsJx = json_decode($product, $assoc);
+
 foreach ($carsJx['times'] as $items)
 {
+    echo "Car Type:". $items['localized_display_name'] ."</div>";
     $sectoloc = $items['estimate'];
     $timetoloc = gmdate("H:i:s", $sectoloc);
-    echo "ETA for ". $items['localized_display_name'] .": ". $timetoloc ."</br>";
+    echo "<div id="distance">Time to Your Location:". $timetoloc ."";
 
 };
 ?>
 <div id="distance"></div> 
-<div id="distance11"></div> 
-<div id="distance12"></div> 
 <div id="distance2"></div> 
 <div id="distance3"></div>
 <script type='text/javascript' src="calculate.js"></script>
