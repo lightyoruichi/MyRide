@@ -61,7 +61,19 @@ foreach ($carsJx['times'] as $items)
 <div id="distance2"></div> 
 <div id="distance3"></div>
 <script type='text/javascript' src="calculate.js"></script>
-<p class="taxibuttonwrapper"><a href="uber://?action=setPickup&pickup=my_location&dropoff[nickname]=Harinder&dropoff[formatted_address]=KLCC&dropoff[latitude]=3.1539280&dropoff[longitude]=101.7135290" class="taximebutton">uber</a></p>
+
+<button class="SeeMore2" onclick="">Get Uber to send you?</button>
+<script>
+$('.SeeMore2').click(function(){
+    var $this = $(this);
+    $this.toggleClass('SeeMore2');
+    if($this.hasClass('SeeMore2')){
+        $this.text('Get Uber to send you?');         
+    } else {
+        $this.text('Uber Promo Code (gdpgr)');
+    }
+});
+</script>
 <div id="top">
 </div>
 </div>

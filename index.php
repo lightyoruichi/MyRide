@@ -1,38 +1,111 @@
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head> 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<!doctype html>
+<head>
+  <title>My Rides</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <link rel="stylesheet" href="css/style.css"/>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="jquery.form.js"></script> 
 <script type="text/javascript" charset="utf-8" src="geolocation.js"></script>
 <script type="text/javascript" src="spin.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
-    <title>Ride Cheaper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=no"/>  
+  <meta name="description" content="My Ride estimates for popular ridesharing services in Malaysia such as Uber, MyTeksi, and EasyTaxi to help you get the best price and fastest service."/>
+  <meta name="og:description" content="My Ride estimates for popular ridesharing services in Malaysia such as Uber, MyTeksi, and EasyTaxi to help you get the best price and fastest service."/>
+  <meta property="og:title" content="My Ride"/>
+  <meta property="og:url" content="http://lightyoruichi.com/myride"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="http://lightyoruichi.com/myride/logo.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=no"/>  
+
 </head>
-<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="style.css">
-<script type="text/javascript" src="spin.js"></script>
-<body>
+<body ng-controller="RootCtrl" fc-reset-scroll-top-on="pageState.showReportFeedback">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">
+          <span>
+            <img class="nav-icon" src="static/img/wtf-header-icon.png">
+            <img class="nav-icon-2x" src="static/img/wtf-header-icon-2x.png">
+          </span>
+          <span>
+            WHAT'S THE FARE
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid hero-container"
+    ng-class="{'collapsed': pageState.hasHadResponse}"
+    ng-controller="HeroCtrl" fc-freeze-height>
+    <div class="container inner-container hero-inner-container">
+      <div class="row hero-row">
+        <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 hero-section">
+          <div class="hero-content">
+            <div class="hero-img-wrapper">
+				<div id="map" style="display:none; width: 100%; height: 100%; font-family: Montserrat, sans-serif;"></div> 
+            </div>
+            <div class="hero-tagline">
+              Compare for the Best Fare
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid main-form-container" ng-show="!pageState.showReportFeedback">
+    <div class="container inner-container">
+      <div ng-controller="MainFormCtrl" class="main-form">
+        <form action="index.php" method="post" id="Address">
+        <div class="form-group">
+          <div class="input-group">
+            <input name="start" id="start" type="text" class="form-control" placeholder="PICKUP LOCATION" tabindex="1" autofocus/>
+            <span class="input-group-btn">
+              <button class="btn btn-default location-btn" id="getLocation" onclick="getLocation()">
+                <span class="glyphicon glyphicon-screenshot"></span>
+              </button>
+              
+			  </input>
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input name="end" id="end" type="text" class="form-control" placeholder="DROPOFF LOCATION" tabindex="2" autofocus/>
+            <span class="input-group-btn">
+              <button class="btn btn-default location-btn" >
+              </button>
+              
+			  </input>
+            </span>
+          </div>
+        </div>
 
 
-<div id="body">
-<div id="top">
-  <div id="top"><p id="toploc">Current Location: Kuala Lumpur City Centre, Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia</p></div><div id="spin" style="display:none;"></div><p id="header">MyRide</p>
-  <input type="button" class="Button" id="getLocation" onclick="getLocation()" value="find me"/>
-  <form action="index.php" method="post" id="Address">
-    <p>start address: 
-        <input type="text" name="start" id="start">
-        <br>
-        end address:
-        <input type="text" name="end" id="end">
-  <br><br>
-        <input type="submit" class="Button" name="submit" id="submit" value="submit">
-    </p>
-</form>
-<div id="map" style="display:none; width: 250px; height: 200px; font-family: Montserrat, sans-serif;"></div> 
-<br><div id="duration"></div> 
-<?php 
+        <div class="submit-button-wrapper">
+          <button class="btn btn-get-estimates" ng-click="submit()" tabindex="3"
+            ng-disabled="submitting">
+            GET ESTIMATES         
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+      <div class="feedback-link">
+        <a ng-click="pageState.showReportFeedback = true" href="javascript:void(0)">
+          Help Us Make This Estimate Better
+        </a>
+      </div>
+
+      <div class="disclaimers">
+        <p>
+          <br><div id="duration"></div> 
+        </p>
+ <?php 
 
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
@@ -45,7 +118,7 @@ $carsJx = json_decode($carsJ, $assoc);
 foreach ($carsJx['times'] as $items)
 {
     $sectoloc = $items['estimate'];
-    $timetoloc = gmdate("H:i:s", $sectoloc);
+    $timetoloc = gmdate("i:s", $sectoloc);
     echo "ETA for ". $items['localized_display_name'] .": ". $timetoloc ."</br>";
 
 };
@@ -56,10 +129,37 @@ foreach ($carsJx['times'] as $items)
 <div id="distance2"></div> 
 <div id="distance3"></div>
 <script type='text/javascript' src="calculate.js"></script>
-<p class="taxibuttonwrapper"><a href="uber://?action=setPickup&pickup=my_location&dropoff[nickname]=Harinder&dropoff[formatted_address]=KLCC&dropoff[latitude]=3.1539280&dropoff[longitude]=101.7135290" class="taximebutton">uber</a></p>
-<div id="top">
-</div>
-</div>
-</body> 
-<script type="text/javascript" src="ga.js"></script>
+<br><div id="OpenApp"></div> 
+<button class="SeeMore2">Get Uber to send you?</button>
+<script>
+$('.SeeMore2').click(function(){
+    var $this = $(this);
+    $this.toggleClass('SeeMore2');
+    if($this.hasClass('SeeMore2')){
+        $this.text('Get Uber to send you?');         
+    } else {
+        $this.text('Uber Promo Code (gdpgr)');
+    }
+});
+</script>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="social-widgets">
+    <span class="widget fb-widget">
+      <div class="fb-like" data-href="ttp://lightyoruichi.com/myride/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </span>
+    <span class="widget">
+      <a href="https://twitter.com/share?url=http://lightyoruichi.com/myride&text=An+easy+way+to+compare+fares+across+different+ride+services&hashtags=whatsthefare"
+        class="twitter-share-button" data-lang="en">Tweet</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </span>
+  </div>
+
+</body>
 </html>

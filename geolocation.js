@@ -16,7 +16,7 @@
       console.log("Exiting getLocation()");
     };
     function displayCurrentLocation(position){
-      var latitude = position.coords.latitude;
+    var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
     getAddressFromLatLang(latitude,longitude);
     }

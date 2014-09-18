@@ -37,6 +37,8 @@ map.setCenter(center);
            "EasyTeksi cost: RM" + Math.round( (7.5+(response.routes[0].legs[0].distance.value*0.000621371*1.5)+(response.routes[0].legs[0].duration.value/60*.44)) *100 ) /100;
          document.getElementById('duration').innerHTML = 
             "Time to location: " + Math.round( (response.routes[0].legs[0].duration.value/60) *100 ) / 100 + " minutes";
+         document.getElementById('OpenApp').innerHTML = 
+            "<a href='uber://?action=setPickup&pickup=my_location'>Open Uber App</a>";
          directionsDisplay.setDirections(response);
       }
    });

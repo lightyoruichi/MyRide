@@ -5,6 +5,8 @@ body {
     font-family:'Montserrat',sans-serif;
     font-size:13px;
     color:#fff
+    width:90%;
+    height:80%;
 }
 
 a:link {
