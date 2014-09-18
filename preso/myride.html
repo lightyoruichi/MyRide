@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>My Rides</title>
+  <link rel="stylesheet" href="myride_data/bootstrap.css">
+  <script src="myride_data/widgets.js" id="twitter-wjs"></script><script type="text/javascript" src="myride_data/js.js"></script><script src="myride_data/main.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="myride_data/style.css">
+<script src="myride_data/jquery-1.js"></script>
+<script src="myride_data/jquery.js"></script> 
+<script type="text/javascript" charset="utf-8" src="myride_data/geolocation.js"></script>
+<script type="text/javascript" src="myride_data/spin.js"></script><style type="text/css"></style>
+  <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=no">  
+  <meta name="description" content="My Ride estimates for popular ridesharing services in Malaysia such as Uber, MyTeksi, and EasyTaxi to help you get the best price and fastest service.">
+  <meta name="og:description" content="My Ride estimates for popular ridesharing services in Malaysia such as Uber, MyTeksi, and EasyTaxi to help you get the best price and fastest service.">
+  <meta property="og:title" content="My Ride">
+  <meta property="og:url" content="http://lightyoruichi.com/myride">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="http://lightyoruichi.com/myride/logo.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=no">  
+
+<script src="http://maps.gstatic.com/cat_js/maps-api-v3/api/js/18/4/%7Bcommon,util,stats%7D.js" charset="UTF-8" type="text/javascript"></script></head>
+<body data-twttr-rendered="true" ng-controller="RootCtrl" fc-reset-scroll-top-on="pageState.showReportFeedback">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="http://lightyoruichi.com/myride/index.html">
+          <span>
+            <img class="nav-icon" src="myride_data/wtf-header-icon.html">
+            <img class="nav-icon-2x" src="myride_data/wtf-header-icon-2x.html">
+          </span>
+          <span>
+            WHAT'S THE FARE
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid hero-container" ng-class="{'collapsed': pageState.hasHadResponse}" ng-controller="HeroCtrl" fc-freeze-height="">
+    <div class="container inner-container hero-inner-container">
+      <div class="row hero-row">
+        <div class="col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 hero-section">
+          <div class="hero-content">
+            <div class="hero-img-wrapper">
+				<div id="map" style="display:none; width: 100%; height: 100%; font-family: Montserrat, sans-serif;"></div> 
+            </div>
+            <div class="hero-tagline">
+              Compare for the Best Fare
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid main-form-container" ng-show="!pageState.showReportFeedback">
+    <div class="container inner-container">
+      <div ng-controller="MainFormCtrl" class="main-form">
+        <form action="index.php" method="post" id="Address">
+        <div class="form-group">
+          <div class="input-group">
+            <input name="start" id="start" class="form-control" placeholder="PICKUP LOCATION" tabindex="1" autofocus="" type="text">
+            <span class="input-group-btn">
+              <button class="btn btn-default location-btn" id="getLocation" onclick="getLocation()">
+                <span class="glyphicon glyphicon-screenshot"></span>
+              </button>
+              
+			  
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input name="end" id="end" class="form-control" placeholder="DROPOFF LOCATION" tabindex="2" autofocus="" type="text">
+            <span class="input-group-btn">
+              <button class="btn btn-default location-btn" id="getLocation">
+              </button>
+              
+			  
+            </span>
+          </div>
+        </div>
+
+
+        <div class="submit-button-wrapper">
+          <button class="btn btn-get-estimates" ng-click="submit()" tabindex="3" ng-disabled="submitting">
+            GET ESTIMATES         
+          </button>
+        </div>
+      </form></div>
+    </div>
+  </div>
+
+
+
+      <div class="feedback-link">
+        <a ng-click="pageState.showReportFeedback = true" href="javascript:void(0)">
+          Help Us Make This Estimate Better
+        </a>
+      </div>
+
+      <div class="disclaimers">
+        <p>
+          <br></p><div id="duration"></div> 
+        <p></p>
+ ETA for UberBLACK: 10:34<br><div id="distance"></div> 
+<div id="distance11"></div> 
+<div id="distance12"></div> 
+<div id="distance2"></div> 
+<div id="distance3"></div>
+<script type="text/javascript" src="myride_data/calculate.js"></script>
+<br><div id="OpenApp"></div> 
+<button class="SeeMore2" onclick="getLocation()">Get Uber to send you?</button>
+<script>
+$('.SeeMore2').click(function(){
+    var $this = $(this);
+    $this.toggleClass('SeeMore2');
+    if($this.hasClass('SeeMore2')){
+        $this.text('Get Uber to send you?');         
+    } else {
+        $this.text('Uber Promo Code (gdpgr)');
+    }
+});
+</script>
+
+      </div>
+    
+  
+
+
+
+
+  <div class="social-widgets">
+    <span class="widget fb-widget">
+      <div class="fb-like" data-href="ttp://lightyoruichi.com/myride/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+    </span>
+    <span class="widget">
+      <iframe style="width: 107px; height: 20px;" data-twttr-rendered="true" title="Twitter Tweet Button" class="twitter-share-button twitter-tweet-button twitter-share-button twitter-count-horizontal" src="myride_data/tweet_button.html" allowtransparency="true" scrolling="no" id="twitter-widget-0" frameborder="0"></iframe>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </span>
+  </div>
+
+
+</body></html>
